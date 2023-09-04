@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addContact } from 'redux/contactsSlice';
+import { nanoid } from '@reduxjs/toolkit';
 
-export const ContactsForm = ({ handleAddContact }) => {
+export const ContactsForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+  const dispatch = useDispatch();
 
   const handleChangeInput = ({ target }) => {
     const { name, value } = target;
@@ -21,7 +25,7 @@ export const ContactsForm = ({ handleAddContact }) => {
     event.preventDefault();
     const name = event.target.name.value;
     const number = event.target.number.value;
-    handleAddContact({ name, number });
+    dispatch(addContact({id: nanoid(), name, number }));
     setName('');
     setNumber('');
   };
@@ -38,7 +42,7 @@ export const ContactsForm = ({ handleAddContact }) => {
         title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
         required
       />
-      <h2>number</h2>
+      <h2>Number</h2>
       <input
         onChange={handleChangeInput}
         type="tel"
